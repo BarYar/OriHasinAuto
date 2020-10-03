@@ -48,14 +48,15 @@ class CartIcon:
         return self.driver.find_element_by_xpath('//header//a/span[@ng-show="(cart | productsCartCount) > 0"]').text
 
     def WaitToCartIcon(self):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"img[class='imageUrl']")))
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//li//table[@ng-show='cart.productsInCart.length > 0']")))#Update-Bar-wait
 
     def QtyInCartIcon(self, index):
          list1 = self.driver.find_elements_by_xpath("//label[contains(text(),'QTY')]")
          list1 = self.ReplaceList(list1)
          Qty = list1[index].text[5:]
          print(Qty)
-         return Qty
+         return int(Qty)#Update- Bar-int
 
     def PriceInCartIcon(self, index):
         list1 = self.driver.find_elements_by_class_name("price")
@@ -63,7 +64,7 @@ class CartIcon:
         Price = list1[index].text[1:]
         Price = Price.replace(',','')
         print(Price)
-        return Price
+        return float(Price)#Update- Bar-float
 
     def ColorInCartIcon(self, index):
         list1 = self.driver.find_elements_by_css_selector("span[class='ng-binding']")
@@ -155,12 +156,12 @@ class ProductPage:
 
 
     def EqualProduct(self, list1, list2):  # Check if product that added to cart , appearing good in cart icon
-        for i in range(3):# debug
-            for x in range(4):
-                print("list2")    # debug
-                print(list2[i][x])     # debug
-                print("list1")    # debug
-                print(list1[i][x])     # debug
+        # for i in range(3):# debug
+        #     for x in range(4):
+        #         print("list2")    # debug
+        #         print(list2[i][x])     # debug
+        #         print("list1")    # debug
+        #         print(list1[i][x])     # debug
 
 
         for i in range(len(list1)):
